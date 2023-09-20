@@ -1,4 +1,4 @@
-package ru.skypro.homework.controller;
+package ru.skypro.diploma.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.homework.dto.Login;
-import ru.skypro.homework.dto.Register;
-import ru.skypro.homework.service.AuthService;
+import ru.skypro.diploma.dto.Login;
+import ru.skypro.diploma.dto.Register;
+import ru.skypro.diploma.service.AuthService;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
