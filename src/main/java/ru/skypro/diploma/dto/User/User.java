@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Data
 public class User {
     private Integer id;
-    private String email;
+    private String username;
     private String firstName;
     private String lastName;
     private String phone;
     private Role role;
-    private byte[] image;
+    private String image;
 }
