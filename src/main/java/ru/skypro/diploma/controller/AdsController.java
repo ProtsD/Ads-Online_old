@@ -5,7 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.diploma.dto.ads.Ad;
+import ru.skypro.diploma.dto.ads.Ads;
 import ru.skypro.diploma.dto.ads.CreateOrUpdateAd;
+import ru.skypro.diploma.dto.ads.ExtendedAd;
 import ru.skypro.diploma.service.AdsService;
 
 @RestController
@@ -16,17 +19,17 @@ public class AdsController {
     private final AdsService adsService;
 
     @GetMapping()
-    public ResponseEntity<?> getAllAds(Authentication authentication){
+    public Ads getAllAds(Authentication authentication){
         return adsService.getAllAds(authentication);
     }
 
     @PostMapping()
-    public ResponseEntity<?> addAd(Authentication authentication, @RequestBody CreateOrUpdateAd properties, @RequestBody MultipartFile image){
+    public Ad addAd(Authentication authentication, @RequestBody CreateOrUpdateAd properties, @RequestBody MultipartFile image){
         return adsService.addAd(authentication, properties, image);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id){
+    public ExtendedAd getAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id){
         return adsService.getAdInfo(authentication, id);
     }
 
@@ -36,17 +39,17 @@ public class AdsController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody CreateOrUpdateAd properties){
+    public Ad updateAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody CreateOrUpdateAd properties){
         return adsService.updateAdInfo(authentication, id, properties);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUserAds(Authentication authentication){
+    public Ads getCurrentUserAds(Authentication authentication){
         return adsService.getCurrentUserAds(authentication);
     }
 
     @PatchMapping("/{id}/image")
-    public ResponseEntity<?> updateAdImage(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody MultipartFile image){
+    public String updateAdImage(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody MultipartFile image){
         return adsService.updateAdImage(authentication, id, image);
     }
 }
