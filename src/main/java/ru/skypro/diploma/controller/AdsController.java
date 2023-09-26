@@ -1,7 +1,6 @@
 package ru.skypro.diploma.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,8 +33,8 @@ public class AdsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAd(Authentication authentication, @PathVariable(name = "id") Integer id){
-        return adsService.deleteAd(authentication, id);
+    public void deleteAd(Authentication authentication, @PathVariable(name = "id") Integer id){
+        adsService.deleteAd(authentication, id);
     }
 
     @PatchMapping("/{id}")

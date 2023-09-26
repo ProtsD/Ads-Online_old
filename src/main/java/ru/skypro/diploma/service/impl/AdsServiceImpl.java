@@ -1,7 +1,6 @@
 package ru.skypro.diploma.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,8 +29,8 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public ResponseEntity<?> deleteAd(Authentication authentication, Integer id) {
-        return null;
+    public void deleteAd(Authentication authentication, Integer id) {
+
     }
 
     @Override
