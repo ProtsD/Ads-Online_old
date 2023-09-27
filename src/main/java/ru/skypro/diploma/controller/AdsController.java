@@ -54,7 +54,7 @@ public class AdsController {
     public ResponseEntity<?> deleteAd(Authentication authentication, @PathVariable(name = "id") Integer id){
         adsService.deleteAd(authentication, id);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PatchMapping("/{id}")
