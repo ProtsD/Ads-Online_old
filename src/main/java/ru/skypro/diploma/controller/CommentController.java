@@ -1,35 +1,49 @@
 package ru.skypro.diploma.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.diploma.dto.Comment.Comment;
+import ru.skypro.diploma.dto.Comment.Comments;
 import ru.skypro.diploma.dto.Comment.CreateOrUpdateComment;
+import ru.skypro.diploma.service.CommentService;
+
+import javax.validation.Valid;
 
 
 @RestController("/ads")
+@RequiredArgsConstructor
 public class CommentController {
-//    private final CommentService commentService;
-//
-//    public CommentController(CommentService commentService) {
-//        this.commentService = commentService;
-//    }
+    private final CommentService commentService;
 
     @GetMapping("/{id}/comments")
-    public void getAllComments(@PathVariable int id){
-//        commentService.getAllComments(id);
+    public ResponseEntity<Comments> getAllComments(Authentication authentication,@PathVariable int id){
+        Comments comments =commentService.getAllComments(authentication,id);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(comments);
     }
     @PostMapping("/{id}/comments")
-    public Comment createComment(Authentication authentication, @PathVariable int id, @RequestBody CreateOrUpdateComment comment){
-//        return commentService.createComment(authentication,id,comment);
-        return null;
+    public ResponseEntity<Comment> createComment(Authentication authentication, @PathVariable int id, @RequestBody @Valid CreateOrUpdateComment createOrUpdateComment){
+        Comment comment =commentService.createComment(authentication,id,createOrUpdateComment);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(comment);
     }
     @DeleteMapping("/{adId}/comments/{commentId}")
-    public void deleteComment(@PathVariable int adId,@PathVariable int commentId){
-//        commentService.deleteComment(adId,commentId);
+    public ResponseEntity<?> deleteComment(Authentication authentication,@PathVariable int adId, @PathVariable int commentId){
+        commentService.deleteComment(authentication,adId, commentId);
+        return ResponseEntity.ok().build();
     }
     @PatchMapping("/{adId}/comments/{commentId}")
-    public Comment updateComment(@PathVariable int adId,@PathVariable int commentId,@RequestBody CreateOrUpdateComment createOrUpdateComment){
-//        commentService.updateComment(adId,commentId,createOrUpdateComment);
-        return null;
+    public ResponseEntity<Comment> updateComment(Authentication authentication,@PathVariable int adId, @PathVariable int commentId, @RequestBody @Valid CreateOrUpdateComment createOrUpdateComment){
+        Comment comment =commentService.updateComment(authentication,adId,commentId,createOrUpdateComment);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(comment);
     }
 }
