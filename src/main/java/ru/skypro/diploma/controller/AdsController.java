@@ -14,6 +14,8 @@ import ru.skypro.diploma.dto.ads.CreateOrUpdateAd;
 import ru.skypro.diploma.dto.ads.ExtendedAd;
 import ru.skypro.diploma.service.AdsService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/ads")
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class AdsController {
     }
 
     @PostMapping()
-    public ResponseEntity<Ad> addAd(Authentication authentication, @RequestBody CreateOrUpdateAd properties, @RequestBody MultipartFile image){
+    public ResponseEntity<Ad> addAd(Authentication authentication, @RequestBody @Valid CreateOrUpdateAd properties, @RequestBody MultipartFile image){
         Ad addAd = adsService.addAd(authentication, properties, image);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -56,7 +58,7 @@ public class AdsController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Ad> updateAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody CreateOrUpdateAd properties){
+    public ResponseEntity<Ad> updateAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody @Valid CreateOrUpdateAd properties){
         Ad updateAdInfo = adsService.updateAdInfo(authentication, id, properties);
 
         return ResponseEntity.ok()
