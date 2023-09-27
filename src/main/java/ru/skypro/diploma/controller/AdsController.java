@@ -2,6 +2,7 @@ package ru.skypro.diploma.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,7 +34,7 @@ public class AdsController {
     public ResponseEntity<Ad> addAd(Authentication authentication, @RequestBody CreateOrUpdateAd properties, @RequestBody MultipartFile image){
         Ad addAd = adsService.addAd(authentication, properties, image);
 
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(addAd);
     }
