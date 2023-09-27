@@ -1,6 +1,9 @@
 package ru.skypro.diploma.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,37 +21,63 @@ public class AdsController {
     private final AdsService adsService;
 
     @GetMapping()
-    public Ads getAllAds(Authentication authentication){
-        return adsService.getAllAds(authentication);
+    public ResponseEntity<Ads> getAllAds(Authentication authentication){
+        Ads allAds = adsService.getAllAds(authentication);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(allAds);
     }
 
     @PostMapping()
-    public Ad addAd(Authentication authentication, @RequestBody CreateOrUpdateAd properties, @RequestBody MultipartFile image){
-        return adsService.addAd(authentication, properties, image);
+    public ResponseEntity<Ad> addAd(Authentication authentication, @RequestBody CreateOrUpdateAd properties, @RequestBody MultipartFile image){
+        Ad addAd = adsService.addAd(authentication, properties, image);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(addAd);
     }
 
     @GetMapping("/{id}")
-    public ExtendedAd getAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id){
-        return adsService.getAdInfo(authentication, id);
+    public ResponseEntity<ExtendedAd> getAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id){
+        ExtendedAd adInfo = adsService.getAdInfo(authentication, id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(adInfo);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAd(Authentication authentication, @PathVariable(name = "id") Integer id){
+    public ResponseEntity<?> deleteAd(Authentication authentication, @PathVariable(name = "id") Integer id){
         adsService.deleteAd(authentication, id);
+
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")
-    public Ad updateAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody CreateOrUpdateAd properties){
-        return adsService.updateAdInfo(authentication, id, properties);
+    public ResponseEntity<Ad> updateAdInfo(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody CreateOrUpdateAd properties){
+        Ad updateAdInfo = adsService.updateAdInfo(authentication, id, properties);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(updateAdInfo);
     }
 
     @GetMapping("/me")
-    public Ads getCurrentUserAds(Authentication authentication){
-        return adsService.getCurrentUserAds(authentication);
+    public ResponseEntity<Ads> getCurrentUserAds(Authentication authentication){
+        Ads currentUserAds = adsService.getCurrentUserAds(authentication);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(currentUserAds);
     }
 
     @PatchMapping("/{id}/image")
-    public String updateAdImage(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody MultipartFile image){
-        return adsService.updateAdImage(authentication, id, image);
+    public ResponseEntity<String> updateAdImage(Authentication authentication, @PathVariable(name = "id") Integer id, @RequestBody MultipartFile image){
+        String updateAdImage = adsService.updateAdImage(authentication, id, image);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                .body(updateAdImage);
     }
 }
